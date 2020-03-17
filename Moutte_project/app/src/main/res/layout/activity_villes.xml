@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/ville_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/warning"
+            android:textColor="@color/colorAccent" />
+        <LinearLayout
+            android:id="@+id/content_connected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginLeft="0dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText_add_ville"
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:ems="10"
+                android:layout_marginTop="50dp"
+                android:gravity="start|top"
+                android:hint="@string/add_ville"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="50dp"
+                android:onClick="submit"
+                android:text="@string/action_save" />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:text="@string/list_name" />
+
+        <ListView
+            android:id="@+id/lv_villes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="170dp"
+            />
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

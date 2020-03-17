@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Moutte_project</string>
+
+    <string name="description">Description</string>
+    <string name="ville">Ville</string>
+    <string name="type">appartement</string>
+    <string name="surface">80m2</string>
+    <string name="prix">675 000€</string>
+    <string name="prixm2">Source</string>
+    <string name="rendement">3.3%</string>
+    <string name="loyer">Loyer envisageable:</string>
+    <string name="loyer_prix">1402€/mois</string>
+    <string name="link">Lien :</string>
+
+    <string name="warning"></string>
+    <string name="villes">Mes villes</string>
+
+    <string name="travaux">Travaux</string>
+    <string name="type_travaux">Type de travaux: </string>
+    <string name="montant">Montant: (Ex 100) </string>
+
+    <string name="location">Location</string>
+
+    <string name="emailLogin">Email</string>
+    <string name="passwordLogin">Password</string>
+
+    <string name="location_nu">Location nu</string>
+    <string name="location_meuble">Location meublée</string>
+    <string name="location_meuble_lcd">Location meublée + courte durée</string>
+    <string name="location_cd">Location courte durée</string>
+
+    <string name="add_ville">Ajouter une ville. (Ex: Lorient)</string>
+
+    <string name="action_login">se connecter</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_save">enregistrer</string>
+    <string name="action_annonces">Annonces</string>
+
+    <string name="list_name">Voici la liste de vos villes: </string>
+</resources>

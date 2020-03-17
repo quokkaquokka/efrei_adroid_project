@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="255dp"
+    android:layout_marginTop="5dp"
+    android:padding="8dp"
+    android:id="@+id/container">
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="255dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/annonce_redement"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:gravity="right"
+            android:text="@string/rendement"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/loading_shape"
+            android:id="@+id/annonce_img"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="281dp"
+        android:layout_height="225dp"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/annonce_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/type"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/annonce_ville"
+            android:layout_width="79dp"
+            android:layout_height="wrap_content"
+            android:scrollHorizontally="true"
+            android:text="@string/ville"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/annonce_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/prix"
+            android:textColor="#009688"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/annonce_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/description" />
+
+        <TextView
+            android:id="@+id/annonce_loyet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/loyer"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

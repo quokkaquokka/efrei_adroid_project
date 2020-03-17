@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AnnonceActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/container_global"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="389dp"
+                android:layout_height="319dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="255dp"
+                    android:layout_marginTop="0dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/annonce_redement"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="right"
+                        android:text="@string/rendement"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/annonce_img"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/loading_shape" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/annonce"
+                    android:layout_width="260dp"
+                    android:layout_height="296dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="200dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/annonce_warning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/warning"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:id="@+id/annonce_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/type"
+                        android:textSize="11sp" />
+
+
+                    <TextView
+                        android:id="@+id/annonce_ville"
+                        android:layout_width="79dp"
+                        android:layout_height="wrap_content"
+                        android:scrollHorizontally="true"
+                        android:text="@string/ville"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/annonce_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/prix"
+                        android:textColor="#009688"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/annonce_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:autoLink="web"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/link"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/annonce_loyet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/loyer"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/annonce_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/description" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/details"
+                android:layout_width="400dp"
+                android:layout_height="416dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+
+                <LinearLayout
+                    android:id="@+id/content_connected"
+                    android:layout_width="388dp"
+                    android:layout_height="367dp"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="200dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/annonce_travaux"
+                        android:layout_width="79dp"
+                        android:layout_height="wrap_content"
+                        android:scrollHorizontally="true"
+                        android:text="@string/travaux"
+                        android:textColor="#009688"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/annonce_type_travaux"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/type_travaux" />
+
+                    <EditText
+                        android:id="@+id/editText_travaux"
+                        android:layout_width="303dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+
+
+                    <EditText
+                        android:id="@+id/editText_Montant"
+                        android:layout_width="153dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/montant"
+                        android:inputType="numberDecimal" />
+
+                    <TextView
+                        android:id="@+id/annonce_location_type"
+                        android:layout_width="79dp"
+                        android:layout_height="wrap_content"
+                        android:scrollHorizontally="true"
+                        android:text="@string/location"
+                        android:textColor="#009688"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_location_nu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:text="@string/location_nu" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_location_meuble"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:text="@string/location_meuble" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_location_meuble_lcd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:text="@string/location_meuble_lcd" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_location_cd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:text="@string/location_cd" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="123dp"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="180dp"
+                        android:onClick="onSubmit"
+                        android:text="@string/action_save" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
