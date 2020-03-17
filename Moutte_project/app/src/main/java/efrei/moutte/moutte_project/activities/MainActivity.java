@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView ;
 
 
-
+    /**
+     * onCreate: initialise la vue, fait appel à jsonrequest pour chercher dans l'API les donnees.
+     * */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
         lstAnnonce = new ArrayList<>() ;
         recyclerView = findViewById(R.id.recyclerViewAnnonce);
 
+        // initialise la barre de menu
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         try {
+            // initialise les données
             jsonrequest();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -63,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * onOptionsItemSelected : Les actions du menu
+     * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -89,16 +96,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void jsonrequest() throws JSONException {
 
+        // récupère la liste des annonces avec un GET
         request = new JsonObjectRequest(Request.Method.GET, JSON_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 JSONObject jsonObject  = null ;
                 try {
+                        // recupere un tableau d'objet en json
                         JSONArray arr = response.getJSONArray("hits");
                         for(int i = 0; i < arr.length(); i++) {
                             jsonObject = arr.getJSONObject(i);
+                            // initialise l'objet (annonce)
                             Annonce annonce = new Annonce();
-
+                            // met les donnee dans l'objet
                             annonce.setObjectID(jsonObject.getString("objectID"));
                             annonce.setId_annonce(jsonObject.getString("id_annonce"));
                             annonce.setVille(jsonObject.getString("ville"));
@@ -117,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             annonce.setDescription(jsonObject.getString("description"));
                             annonce.setImg_url(jsonObject.getString("img"));
 
+                            // ajoute l'objet a la liste
                             lstAnnonce.add(annonce);
                         }
                 } catch (JSONException e) {
@@ -130,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }
         })
         {
+            // met un referer pour savoir d'ou vient la requete
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();

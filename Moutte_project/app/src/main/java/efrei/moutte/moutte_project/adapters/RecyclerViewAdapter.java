@@ -35,6 +35,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
+    /**
+     * onCreateViewHolder : transfert les donnees dans une autre vue
+     * */
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -67,6 +70,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return viewHolder;
     }
 
+    /**
+     * onBindViewHolder : ajoute les donnees a la vue
+     * */
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tv_ville.setText(mData.get(position).getVille());
@@ -85,6 +91,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        // initialise les element graphique
         TextView tv_ville ;
         TextView tv_type ;
         TextView tv_description ;
@@ -97,6 +104,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            // recupere les elements graphiue grace a l'id
             view_container = itemView.findViewById(R.id.container);
             tv_ville = itemView.findViewById(R.id.annonce_ville);
             tv_type = itemView.findViewById(R.id.annonce_type);

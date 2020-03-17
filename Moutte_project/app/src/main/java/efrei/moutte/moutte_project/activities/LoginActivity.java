@@ -3,7 +3,6 @@ package efrei.moutte.moutte_project.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,6 +30,7 @@ import efrei.moutte.moutte_project.models.Annonce;
 import efrei.moutte.moutte_project.models.Authentification;
 
 public class LoginActivity extends AppCompatActivity {
+    // url de l'API
     private final String JSON_URL = "https://9kmebpt3vb-dsn.algolia.net/1/indexes/user?x-algolia-application-id=9KMEBPT3VB&x-algolia-api-key=6b3e5d8cef4bc3f48fd4b566b270dd0b" ;
     private JsonObjectRequest request ;
     private RequestQueue requestQueue ;
@@ -39,12 +39,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        // String getLogin = getIntent().getStringExtra("Login");
-        // TextView displayTextView = (TextView) findViewById(R.id.textView4);
-        // displayTextView.setText(getLogin);
     }
 
+    /**
+     * submit : la fonction est appele lorsqu'on clique sur le boutton 'se connecter'
+     * La fonction envoie le mail et le password et attend d'avoir un résultat correspondant
+     * Change de vue, lorsque la réponse arrive
+     * */
 
     public void submit(View view) throws JSONException {
         EditText mailEditText = (EditText) findViewById(R.id.mailEditText);
@@ -58,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(mainIntent);
 
     }
+    /**
+     * jsonrequest : la fonction fait la requete sur l'API (POST).
+     * utilise les filters d'algolia.
+     * */
 
     private void jsonrequest(String email, String password) throws JSONException {
         JSONObject params = new JSONObject();
@@ -70,13 +75,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 JSONObject jsonObject  = null ;
                 try {
-                    Log.i("submit", "response json");
+                    // recupere un tableau de reponse avec un element
                     JSONArray arr = response.getJSONArray("hits");
                     jsonObject = arr.getJSONObject(0);
+
+                    // recupere les donnees de l'API
                     String email = jsonObject.getString("email");
                     String password = jsonObject.getString("password");
                     String id = jsonObject.getString("objectID");
 
+                    // initialise les villes de l'utilisateur
                     List<String> villes = new ArrayList<String>();
                     JSONArray jArray = jsonObject.getJSONArray("villes");;
                     if (jArray != null) {
@@ -85,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
+                    // initialise les annonces de l'utilisateur
                     List<Annonce> annonces = new ArrayList<Annonce>();
                     jArray = jsonObject.getJSONArray("annonces");
                     if (jArray != null) {
@@ -121,11 +130,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
+                    // instancie la classe Authentification (qui est un singleton)
                     Authentification.instanciate(email, password, id, villes, annonces);
                     Context context = getApplicationContext();
                     CharSequence text = "Vous êtes connecté!";
                     int duration = Toast.LENGTH_SHORT;
-
+                    // affiche a l'utilisateur, s'il a réussi à se connecter
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
@@ -134,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }, new Response.ErrorListener() {
+            // Une erreur a l'utilisateur si la donnee n'est pas sauvegarde en base
             @Override
             public void onErrorResponse(VolleyError error) {
                 Context context = getApplicationContext();
@@ -146,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         })
         {
+            // met un referer pour savoir d'ou vient la requete
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();

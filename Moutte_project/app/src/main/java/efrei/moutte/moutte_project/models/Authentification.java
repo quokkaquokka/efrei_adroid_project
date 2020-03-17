@@ -3,6 +3,9 @@ package efrei.moutte.moutte_project.models;
 import java.util.List;
 
 public class Authentification {
+    /**
+     * La classe Authentification est un singleton, elle ne peut etre authentifier qu'une seule fois.
+     * */
 
     private static Authentification single_authentification = null;
     private String name = null;

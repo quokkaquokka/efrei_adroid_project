@@ -49,12 +49,7 @@ public class AnnonceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonce);
 
-        // hide the default actionbar
-        // getSupportActionBar().hide();
-
-
-        // Recieve data
-
+        // Recoit les donnees tranferrees par le RecyclerViewAdapter
         String ville  = getIntent().getExtras().getString("annonce_ville");
         String loyet = getIntent().getExtras().getString("annonce_loyet");
         String description = getIntent().getExtras().getString("annonce_description");
@@ -64,13 +59,8 @@ public class AnnonceActivity extends AppCompatActivity {
         String link = getIntent().getExtras().getString("annonce_link");
         String image_url = getIntent().getExtras().getString("annonce_img") ;
         objectID = getIntent().getExtras().getString("annonce_objectId");
-        // String id = getIntent().getExtras().getString("annonce_id");
 
-        // ini views
-
-        // CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsingtoolbar_id);
-        // collapsingToolbarLayout.setTitleEnabled(true);
-
+        // initialise les données en recuperant les elements dans le fichier activity_annonce.xml grâce aux ids
         TextView tv_ville = findViewById(R.id.annonce_ville);
         TextView tv_loyet = findViewById(R.id.annonce_loyet);
         TextView tv_description = findViewById(R.id.annonce_description);
@@ -80,8 +70,7 @@ public class AnnonceActivity extends AppCompatActivity {
         TextView tv_link = findViewById(R.id.annonce_link);
         ImageView img = findViewById(R.id.annonce_img);
 
-        // setting values to each view
-
+        // met une valeur dans les différents element graphique
         tv_ville.setText(ville);
         tv_loyet.setText(loyet);
         tv_description.setText(description);
@@ -92,7 +81,7 @@ public class AnnonceActivity extends AppCompatActivity {
         RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.loading_shape).error(R.drawable.loading_shape);
 
 
-        // set image using Glide
+        // utilise Glide pour mettre l'image
         Glide.with(this).load(image_url).apply(requestOptions).into(img);
 
         if(Authentification.getInstance() == null) {
@@ -104,6 +93,7 @@ public class AnnonceActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -111,6 +101,9 @@ public class AnnonceActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * onOptionsItemSelected : Les actions du menu
+     * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -134,6 +127,9 @@ public class AnnonceActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * checkbox : quand on clique sur un item, l'item est rajouté à la liste.
+     * */
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
         switch(view.getId()) {
@@ -164,6 +160,10 @@ public class AnnonceActivity extends AppCompatActivity {
 
         }
     }
+    /**
+     * onSubmit : la fonction est appele lorsqu'on clique sur le boutton 'enregistrer'
+     * La fonction sauvegarde les donnees en base que l'utilisateur a entree.
+     * */
     public void onSubmit(View view) throws JSONException {
 
         EditText et_travaux = findViewById(R.id.editText_travaux);
@@ -177,20 +177,29 @@ public class AnnonceActivity extends AppCompatActivity {
         startActivity(mainIntent);
     }
 
+    /**
+     * jsonrequest : la fonction est appele dans onSubmit
+     * La fonction fait la requete d'update de l'utilisateur sur l'API, en entrant les nouvelles données.
+     * Ce n'est pas une modification partiel de l'utilisateur, il faut donc envoyer toute les informations afin de ne pas ecraser les autres donnees
+     * */
     private void jsonrequest(String travaux, String montant, List<String> location_types) throws JSONException {
         String user_id = Authentification.getInstance().getId();
         String email = Authentification.getInstance().getEmail();
         String password = Authentification.getInstance().getPassword();
         List<String> villes = Authentification.getInstance().getVilles();
         List<Annonce> annonces = Authentification.getInstance().getAnnonces();
+        // URL de l'api
         String JSON_URL = "https://9kmebpt3vb-dsn.algolia.net/1/indexes/user/" + user_id+ "?x-algolia-application-id=9KMEBPT3VB&x-algolia-api-key=" + Constante.getAlgolia_key_admin;
 
+        // creation d'une nouvelle annonce pour la sauvegarde dans la liste des annonces de l'utilisateur
         Annonce annonce = new Annonce();
         annonce.setObjectID(objectID);
         annonce.setMontant(montant);
         annonce.setTravaux(travaux);
         annonce.setLocations(location_types);
         annonces.add(annonce);
+
+        // construction de l'object json a envoyer a l'API
         JSONObject params = new JSONObject();
         params.put("email", email);
         params.put("password", password);
@@ -200,7 +209,7 @@ public class AnnonceActivity extends AppCompatActivity {
         request = new JsonObjectRequest(Request.Method.PUT, JSON_URL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                JSONObject jsonObject  = null ;
+                // envoie un toast si la donnee a reussi a etre inserer en base de donnee
                 Context context = getApplicationContext();
                 CharSequence text = "Vous avez enregistré les données!";
                 int duration = Toast.LENGTH_SHORT;
@@ -213,15 +222,16 @@ public class AnnonceActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Context context = getApplicationContext();
+                // Une erreur a l'utilisateur si la donnee n'est pas sauvegarde en base
                 CharSequence text = "Une erreur est survenue, nous n'avons pas pu enregistré les informations!";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-
             }
         })
         {
+            // met un referer pour savoir d'ou vient la requete
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();

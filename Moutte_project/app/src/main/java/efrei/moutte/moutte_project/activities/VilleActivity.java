@@ -3,7 +3,6 @@ package efrei.moutte.moutte_project.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,13 +48,16 @@ public class VilleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_villes);
 
+        // vue dynamique, celon si l'utilisateur est connecte la vue sera differente.
         if(Authentification.getInstance() == null) {
+            // affiche un warning disant a l'utilisateur de se connecter
              LinearLayout linear_layout = findViewById(R.id.content_connected);
              linear_layout.setVisibility(View.INVISIBLE);
             TextView tv_warning = findViewById(R.id.ville_warning);
             tv_warning.setText("Si vous souhaitez, entrer des informations supplémentaires ou les visualisez. Veuillez-vous connecter!");
         }else
         {
+            // affiche la liste des villes de l'utilisateur
             villes = new ArrayList<String>();
             villes = Authentification.getInstance().getVilles();
 
@@ -74,7 +76,9 @@ public class VilleActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    /**
+     * onOptionsItemSelected : Les actions du menu
+     * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -97,6 +101,11 @@ public class VilleActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    /**
+     * submit : la fonction est appele lorsqu'on clique sur le boutton 'enregistrer'
+     * La fonction enregistre la nouvelle ville de l'utilisateur
+     * Change de vue, lorsque la réponse arrive
+     * */
 
     public void submit(View view) throws JSONException {
         EditText editText_ville = (EditText) findViewById(R.id.editText_add_ville);
@@ -107,14 +116,23 @@ public class VilleActivity extends AppCompatActivity {
         startActivity(mainIntent);
     }
 
+    /**
+     * jsonrequest : la fonction est afait la requete a l'API avec PUT pour ajouter la donnee
+     * La fonction enregistre la nouvelle ville de l'utilisateur
+     * Change de vue, lorsque la réponse arrive
+     * Ce n'est pas une modification partiel de l'utilisateur, il faut donc envoyer toute les informations afin de ne pas ecraser les autres donnees
+     * */
     private void jsonrequest(String ville) throws JSONException {
+        // recuperation des valeurs du singleton
         String user_id = Authentification.getInstance().getId();
         String email = Authentification.getInstance().getEmail();
         String password = Authentification.getInstance().getPassword();
         List<String> villes = Authentification.getInstance().getVilles();
         List<Annonce> annonces = Authentification.getInstance().getAnnonces();
+        // l'adresse de l'API
         String JSON_URL = "https://9kmebpt3vb-dsn.algolia.net/1/indexes/user/" + user_id+ "?x-algolia-application-id=9KMEBPT3VB&x-algolia-api-key=" + Constante.getAlgolia_key_admin;
 
+        // ajout la ville a la liste des villes
         villes.add(ville);
         JSONObject params = new JSONObject();
         params.put("email", email);
@@ -122,11 +140,11 @@ public class VilleActivity extends AppCompatActivity {
         params.put("annonces", annonces);
         params.put("villes", villes);
 
+        // fait la requete avec PUT sur l'API
         request = new JsonObjectRequest(Request.Method.PUT, JSON_URL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                JSONObject jsonObject  = null ;
-
+                // toast disant a l'utilisateur que la donnee a bien ete enregistrer
                 Context context = getApplicationContext();
                 CharSequence text = "Vous avez enregistré les données!";
                 int duration = Toast.LENGTH_SHORT;
@@ -138,6 +156,7 @@ public class VilleActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                // si la donnee n'a pas pu etre enregistre
                 Context context = getApplicationContext();
                 CharSequence text = "Une erreur est survenue, nous n'avons pas pu enregistré les informations!";
                 int duration = Toast.LENGTH_SHORT;
@@ -148,6 +167,7 @@ public class VilleActivity extends AppCompatActivity {
             }
         })
         {
+            // met un referer pour savoir d'ou vient la requete
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
