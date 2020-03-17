@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -192,19 +193,46 @@ public class AnnonceActivity extends AppCompatActivity {
         String JSON_URL = "https://9kmebpt3vb-dsn.algolia.net/1/indexes/user/" + user_id+ "?x-algolia-application-id=9KMEBPT3VB&x-algolia-api-key=" + Constante.getAlgolia_key_admin;
 
         // creation d'une nouvelle annonce pour la sauvegarde dans la liste des annonces de l'utilisateur
-        Annonce annonce = new Annonce();
-        annonce.setObjectID(objectID);
-        annonce.setMontant(montant);
-        annonce.setTravaux(travaux);
-        annonce.setLocations(location_types);
-        annonces.add(annonce);
-
         // construction de l'object json a envoyer a l'API
         JSONObject params = new JSONObject();
         params.put("email", email);
         params.put("password", password);
-        params.put("annonces", annonces);
-        params.put("villes", villes);
+        JSONArray jvilles = new JSONArray();
+        for(int i = 0; i < villes.size(); i++){
+            jvilles.put(villes.get(i));
+        }
+        params.put("villes", jvilles);
+
+        JSONObject jannonce = new JSONObject();
+        jannonce.put("objectID", objectID);
+        jannonce.put("montant", montant);
+        jannonce.put("travaux", travaux);
+        JSONArray jlocation_types = new JSONArray();
+        for(int i = 0; i < location_types.size(); i++){
+            jlocation_types.put(location_types.get(i));
+        }
+        jannonce.put("location_types", jlocation_types);
+
+
+        JSONArray jannonces = new JSONArray();
+        jannonces.put(jannonce);
+        for(int i = 0; i < annonces.size(); i++) {
+            JSONObject jannonce_tmp = new JSONObject();
+            jannonce_tmp.put("objectID", annonces.get(i).getObjectID());
+            jannonce_tmp.put("montant", annonces.get(i).getMontant());
+            jannonce_tmp.put("travaux", annonces.get(i).getTravaux());
+
+            JSONArray jlocation_types_tmp = new JSONArray();
+            for(int j = 0; j < annonces.get(i).getLocations().size(); j++){
+                jlocation_types_tmp.put(annonces.get(i).getLocations().get(j));
+            }
+
+            jannonce_tmp.put("locations", jlocation_types_tmp);
+            jannonces.put(jannonce_tmp);
+        }
+        params.put("annonces", jannonces);
+
+
 
         request = new JsonObjectRequest(Request.Method.PUT, JSON_URL, params, new Response.Listener<JSONObject>() {
             @Override

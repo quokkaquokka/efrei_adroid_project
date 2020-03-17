@@ -100,21 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                         for (int i = 0; i < jArray.length(); i++) {
                             JSONObject jsonObj = jArray.getJSONObject(i);
                             Annonce annonce = new Annonce();
-                            annonce.setVille(jsonObj.getString("ville"));
-                            annonce.setSource(jsonObj.getString("source"));
-                            annonce.setType(jsonObj.getString("type"));
-                            annonce.setLoyer(jsonObj.getInt("loyer"));
-                            annonce.setPrix(jsonObj.getInt("prix"));
-                            annonce.setCp(jsonObj.getString("cp"));
-                            annonce.setSurface(jsonObj.getInt("surface"));
-                            annonce.setPrixm2(jsonObj.getInt("prixm2"));
-                            annonce.setRendement((float) jsonObj.getDouble("rendement"));
-                            annonce.setInvestissement(jsonObj.getInt("investissement"));
-                            annonce.setNbpieces(jsonObj.getInt("nbpieces"));
-                            annonce.setNeuf(jsonObj.getBoolean("neuf"));
-                            annonce.setPermalien(jsonObj.getString("permalien"));
-                            annonce.setDescription(jsonObj.getString("description"));
-                            annonce.setImg_url(jsonObj.getString("img"));
+                            annonce.setObjectID(jsonObj.getString("objectID"));
                             annonce.setTravaux(jsonObj.getString("travaux"));
                             annonce.setMontant(jsonObj.getString("montant"));
 

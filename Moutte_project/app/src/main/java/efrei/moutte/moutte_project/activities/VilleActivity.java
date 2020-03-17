@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -139,6 +140,29 @@ public class VilleActivity extends AppCompatActivity {
         params.put("password", password);
         params.put("annonces", annonces);
         params.put("villes", villes);
+
+        JSONArray jvilles = new JSONArray();
+        for(int i = 0; i < villes.size(); i++){
+            jvilles.put(villes.get(i));
+        }
+        params.put("villes", jvilles);
+
+        JSONArray jannonces = new JSONArray();
+        for(int i = 0; i < annonces.size(); i++) {
+            JSONObject jannonce_tmp = new JSONObject();
+            jannonce_tmp.put("objectID", annonces.get(i).getObjectID());
+            jannonce_tmp.put("montant", annonces.get(i).getMontant());
+            jannonce_tmp.put("travaux", annonces.get(i).getTravaux());
+
+            JSONArray jlocation_types_tmp = new JSONArray();
+            for(int j = 0; j < annonces.get(i).getLocations().size(); j++){
+                jlocation_types_tmp.put(annonces.get(i).getLocations().get(j));
+            }
+
+            jannonce_tmp.put("locations", jlocation_types_tmp);
+            jannonces.put(jannonce_tmp);
+        }
+        params.put("annonces", jannonces);
 
         // fait la requete avec PUT sur l'API
         request = new JsonObjectRequest(Request.Method.PUT, JSON_URL, params, new Response.Listener<JSONObject>() {

@@ -186,4 +186,16 @@ public class Annonce {
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
+
+    public String getTravaux() {
+        return travaux;
+    }
+
+    public String getMontant() {
+        return montant;
+    }
+
+    public List<String> getLocations() {
+        return locations;
+    }
 }
